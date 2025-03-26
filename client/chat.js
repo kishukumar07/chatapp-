@@ -29,14 +29,17 @@ const joinBtn =document.querySelector("#joinBtn");
 joinBtn.addEventListener("click",()=>{
     let user = {name :username.value , room:room.value }
 
-    socket.emit("joinroom",user);
-
-    
+    socket.emit("join-room",user);
+  
+    window.location.href="chat.html"  //redirect to chat.html when btn clicked 
 }) 
 
 
 
-
+//listining custom event  
+socket.on("new-user-joined",(user)=>{
+alert(`${user} joined the room. `)
+})
 
 
 
