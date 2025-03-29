@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+</head>
+
+<body>
+
+
+    <h1>Chat App</h1>
+
+    <div>
+
+        <input id="name" type="text" placeholder="Enter your Name ">
+
+        <input id="room" type="text" placeholder="Enter Room">
+
+        <button id="enter">Enter</button>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
+        crossorigin="anonymous"></script>
+
+
+
+    <script>
+
+        const socket = io("http://localhost:4500", { transports: ["websocket"] });
+
+
+
+
+        const username = document.querySelector("#name");
+        const room = document.querySelector("#room");
+
+        const joinBtn = document.querySelector("#enter");
+
+        joinBtn.addEventListener("click", () => {
+          let   user = { name: username.value, room: room.value };
+
+            console.log(user, "From clientSide");
+            socket.emit("join-room", user); 
+            
+        });
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
