@@ -57,8 +57,16 @@
 
             console.log(user, "From clientSide");
             socket.emit("join-room", user); 
-            
+
         });
+
+
+
+        socket.on("new-user-joined",(user)=>{ 
+                        //  console.log(user ,"broadcasting byevent at clientside ");
+         alert(`${user} joined the room.`); 
+        }); 
+
 
 
 

@@ -8,11 +8,18 @@ const app=express();
 const httpServer =  createServer(app); 
 const io =  new Server(httpServer); 
 
+
+//connection 
+
 io.on("connection" ,(socket)=>{
-    console.log("a user connected"); 
+    console.log("a user connected ",socket.id); 
 
 socket.on("join-room",(data)=>{
     console.log(data, "from serverside")
+//Join the room 
+    socket.join(data.room); 
+//Emit a event to tell others that new user joined. 
+socket.broadcast.to(data.room).emit("new-user-joined" , data.name); 
 })
 
 
