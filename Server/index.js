@@ -2,7 +2,7 @@ import express from 'express';
 
 import { createServer } from 'http';
 import { Server } from 'socket.io'
-import { getAUser ,allUser ,deleteUser , joinUser } from './helper/util.js';
+import { getAUser, allUser, deleteUser, joinUser } from './helper/util.js';
 
 
 
@@ -20,19 +20,29 @@ io.on("connection", (socket) => {
     socket.on("join-room", (data) => {
         // console.log(data, "from serverside"); 
 
-     
-        
         //Join the room 
-        socket.join(data.room );
+        socket.join(data.room);
         //mentioning track who joined in which room . 
-        joinUser(socket.id ,data.name,data.room);
+        joinUser(socket.id, data.name, data.room);
+
+        // console.log("All users in room:", allUser(data.room));
 
         //Emit a event to tell others that new user joined. 
         socket.broadcast.to(data.room).emit("new-user-joined", data.name);
         //also emitting the all users 
-        socket.broadcast.to(data.room).emit("room-users",allUser(data.room)); 
+        socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
+  
 
-    })
+
+
+    socket.on("disconnect", () => {
+        deleteUser(socket.id);
+        socket.broadcast.to(data.room).emit("user-left",data.name ); 
+        socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
+    }); 
+
+})
+
 });
 
 
