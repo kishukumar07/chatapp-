@@ -22,6 +22,14 @@
 
     </div>
 
+    <div id="onlineusers"> 
+    <!-- the div tells info about who joined and left -->
+    </div>
+
+    <div>
+        <input type="text" id="message">
+        <button>Send</button>
+    </div>
 
 
 
@@ -33,33 +41,49 @@
 
 
     <script>
-       const socket = io("http://localhost:4500", { transports: ["websocket"] });
+        const socket = io("http://localhost:4500", { transports: ["websocket"] });
 
         const username = document.querySelector("#name");
         const room = document.querySelector("#room");
         const joinBtn = document.querySelector("#enter");
 
-
+        const onlineusers = document.querySelector("#onlineusers");
+        // console.log(onlineusers); 
 
         joinBtn.addEventListener("click", () => {
             let user = { name: username.value, room: room.value };
-            console.log(user, "From clientSide");
+            // console.log(user, "From clientSide");
             socket.emit("join-room", user);
 
             //we want to redirect user into another chat.html page 
-            window.location.href = "chat.html";
+
+            // window.location.href = "chat.html";   //if this executed immediately then all broadcast is not working ....  can be done further......
         })
 
 
 
         socket.on("new-user-joined", (user) => {
-            console.log(user, "broadcasting byevent at clientside ");
+            // console.log(user, "broadcasting byevent at clientside ");
             alert(`${user} joined the room.`);
         })
+ 
 
-        socket.on("room-users",(allusers)=>{
-            console.log(allusers); 
+
+        socket.on("room-users", (allusers) => {
+            // console.log(allusers);
+            onlineusers.innerHTML=null;
+            
+            allusers.forEach((user) => {
+           let li = document.createElement("li");
+            li.textContent = user.name; // Use textContent for security
+            onlineusers.append(li)   
+            })
+
         })
+
+socket.on("user-left",(user)=>{
+    alert(`${user} lefted the room`);
+})
 
     </script>
 

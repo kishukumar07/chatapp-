@@ -35,9 +35,10 @@ io.on("connection", (socket) => {
 
 
 
+
     socket.on("disconnect", () => {
         deleteUser(socket.id);
-        socket.broadcast.to(data.room).emit("user-left",data.name ); 
+        socket.broadcast.to(data.room).emit("user-left",data.name); 
         socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
     }); 
 
