@@ -22,13 +22,13 @@
 
     </div>
 
-    <div id="onlineusers"> 
-    <!-- the div tells info about who joined and left -->
+    <div id="onlineusers">
+        <!-- the div tells info about who joined and left -->
     </div>
 
     <div>
         <input type="text" id="message">
-        <button>Send</button>
+        <button id="send">Send</button>
     </div>
 
 
@@ -50,6 +50,11 @@
         const onlineusers = document.querySelector("#onlineusers");
         // console.log(onlineusers); 
 
+        const message = document.querySelector("#message");
+        const sendBtn = document.querySelector('#send'); 
+        // console.log(message);
+
+
         joinBtn.addEventListener("click", () => {
             let user = { name: username.value, room: room.value };
             // console.log(user, "From clientSide");
@@ -58,6 +63,7 @@
             //we want to redirect user into another chat.html page 
 
             // window.location.href = "chat.html";   //if this executed immediately then all broadcast is not working ....  can be done further......
+
         })
 
 
@@ -65,25 +71,39 @@
         socket.on("new-user-joined", (user) => {
             // console.log(user, "broadcasting byevent at clientside ");
             alert(`${user} joined the room.`);
-        })
- 
+        }); 
+
 
 
         socket.on("room-users", (allusers) => {
             // console.log(allusers);
-            onlineusers.innerHTML=null;
-            
+            onlineusers.innerHTML = null;
+
             allusers.forEach((user) => {
-           let li = document.createElement("li");
-            li.textContent = user.name; // Use textContent for security
-            onlineusers.append(li)   
+                let li = document.createElement("li");
+                li.textContent = user.name; // Use textContent for security
+                onlineusers.append(li)
             })
 
+        }); 
+
+
+        socket.on("user-left", (user) => {
+            alert(`${user} lefted the room`);
+        }); 
+
+
+        
+        sendBtn.addEventListener("click",()=>{
+            let message =message.value; 
+            socket.emit("send-message",message)
         })
 
-socket.on("user-left",(user)=>{
-    alert(`${user} lefted the room`);
-})
+
+
+
+
+
 
     </script>
 
