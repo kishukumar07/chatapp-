@@ -1,9 +1,18 @@
 import express from 'express';
-import path from "path";
+import path from "path";              // Import path module
 
 import { createServer } from 'http';
 import { Server } from 'socket.io'
 import { getAUser, allUser, deleteUser, joinUser } from './helper/util.js';
+
+import { fileURLToPath } from "url";  // Import to handle file URLs
+
+
+
+//manually defining the _dirname.
+// 🔹 Convert import.meta.url to a normal path
+const __filename = fileURLToPath(import.meta.url); // Get full file path
+const __dirname = path.dirname(__filename);        // Extract directory path
 
 
 
@@ -14,10 +23,13 @@ const io = new Server(httpServer);
 
 
 
-app.get("/room", (req, res) => {
-    res.sendFile(path.join(__dirname,"public/chat.html"));
-})
 
+
+
+
+app.get("/room", (req, res) => {
+    res.sendFile(path.join(__dirname,"public", "chat.html"));
+})
 
 
 
