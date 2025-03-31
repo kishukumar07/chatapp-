@@ -45,15 +45,15 @@ io.on("connection", (socket) => {
         // console.log("All users in room:", allUser(data.room));
 
         //Emit a event to tell others that new user joined. 
-        socket.broadcast.to(data.room).emit("new-user-joined", data.name);
+        socket.broadcast.to(data.room).emit("new-user-joined", data);
         //also emitting the all users 
-        socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
+        socket.broadcast.to(data.room).emit("online-users", allUser(data.room));
 
 
         socket.on("disconnect", () => {
             deleteUser(socket.id);
-            socket.broadcast.to(data.room).emit("user-left", data.name);
-            socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
+            // socket.broadcast.to(data.room).emit("user-left", data.name);
+            socket.broadcast.to(data.room).emit("online-users", allUser(data.room));
         });
 
     })
