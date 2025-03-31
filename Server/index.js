@@ -7,12 +7,21 @@ import { getAUser, allUser, deleteUser, joinUser } from './helper/util.js';
 
 
 const app = express();
+app.use(express.static("public")) // serving all the files from the backend .  
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 
-//connection 
 
+
+
+
+
+
+
+
+
+//connection 
 io.on("connection", (socket) => {
     console.log("a user connected ", socket.id);
 
