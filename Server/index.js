@@ -24,9 +24,6 @@ const io = new Server(httpServer);
 
 
 
-
-
-
 app.get("/room", (req, res) => {
     res.sendFile(path.join(__dirname,"public", "chat.html"));
 })

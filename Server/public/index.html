@@ -13,9 +13,10 @@
     <h1>Chat App</h1>
 
     <form action="./chat.html">
-        <input id="name" type="text" placeholder="Enter your Name ">
-        <input id="room" type="text" placeholder="Enter Room">
-        <button id="enter">Enter</button> 
+        <input  name="name"  id="name" type="text" placeholder="Enter your Name ">
+        <input   name="room" id="room" type="text" placeholder="Enter Room">
+        <!-- <button  id="enter">Enter</button>  -->
+        <input type="submit"  id="enter" >
         <!-- action on enter   -->
     </form>
 
@@ -56,7 +57,7 @@
 
         joinBtn.addEventListener("click", () => {
             let user = { name: username.value, room: room.value };
-            // console.log(user, "From clientSide");
+            console.log(user, "From clientSide");
             socket.emit("join-room", user);
 
             //we want to redirect user into another chat.html page 
