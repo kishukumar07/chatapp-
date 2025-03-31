@@ -26,31 +26,47 @@
         </script>
 
 
+
+    <div id="onlineusers">
+        <h3>onlineusers</h3>
+    </div>
+
+
+    <div id="message">
+        <h2>chats section</h2>
+    </div>
+
+
+
+
     <script>
+
 
 
         const socket = io("http://localhost:4500", { transports: ["websocket"] });
 
-        const queries = window.location.search;
-    
-        const urlParams = new URLSearchParams(queries); //this 
 
+        const queries = window.location.search;
+        const urlParams = new URLSearchParams(queries); //this 
         const username = urlParams.get("name");
         const room = urlParams.get("room");
- 
+        let user = { name: username, room };
+        // console.log(user, "From clientSide");
+        socket.emit("join-room", user);
 
 
+        // joinBtn.addEventListener("click", () => {
+        //     let user = { name: username.value, room: room.value };
+        //     console.log(user, "From clientSide");
+        // socket.emit("join-room", user); 
 
-        joinBtn.addEventListener("click", () => {
-            let user = { name: username.value, room: room.value };
-            console.log(user, "From clientSide");
-            socket.emit("join-room", user);
+        //     //we want to redirect user into another chat.html page 
 
-            //we want to redirect user into another chat.html page 
+        //     // window.location.href = "chat.html";   //if this executed immediately then all broadcast is not working ....  can be done further......
+        // })
 
-            // window.location.href = "chat.html";   //if this executed immediately then all broadcast is not working ....  can be done further......
-        })
 
+        const onlineusers = document.querySelector("#onlineusers");
 
 
         socket.on("new-user-joined", (user) => {
@@ -60,7 +76,7 @@
 
 
         socket.on("room-users", (allusers) => {
-          
+
             onlineusers.innerHTML = null;
 
             allusers.forEach((user) => {
@@ -78,10 +94,10 @@
 
 
 
-        sendBtn.addEventListener("click",()=>{
-            let message =message.value;
-            socket.emit("send-message",message)
-        })
+        // sendBtn.addEventListener("click",()=>{
+        //     let message =message.value;
+        //     socket.emit("send-message",message)
+        // })
 
 
     </script>

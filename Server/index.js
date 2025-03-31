@@ -50,9 +50,6 @@ io.on("connection", (socket) => {
         socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
 
 
-
-
-
         socket.on("disconnect", () => {
             deleteUser(socket.id);
             socket.broadcast.to(data.room).emit("user-left", data.name);
