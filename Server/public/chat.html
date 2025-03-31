@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatRoom</title>
 </head>
+
 <body>
-    
-    
+
+
     <h1>hello chat</h1>
 
 
@@ -19,26 +21,24 @@
 
 
 
-    
-    <script  src="https://cdn.socket.io/4.8.1/socket.io.min.js"
-    integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
-    crossorigin="anonymous">
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous">
+        </script>
 
 
+    <script>
 
 
         const socket = io("http://localhost:4500", { transports: ["websocket"] });
 
-        const username = document.querySelector("#name");
-        const room = document.querySelector("#room");
-        const joinBtn = document.querySelector("#enter");
+        const queries = window.location.search;
+    
+        const urlParams = new URLSearchParams(queries); //this 
 
-        const onlineusers = document.querySelector("#onlineusers");
-        // console.log(onlineusers); 
+        const username = urlParams.get("name");
+        const room = urlParams.get("room");
+ 
 
-        // const message = document.querySelector("#message");
-        // const sendBtn = document.querySelector('#send'); 
-        // console.log(message);
 
 
         joinBtn.addEventListener("click", () => {
@@ -49,20 +49,18 @@
             //we want to redirect user into another chat.html page 
 
             // window.location.href = "chat.html";   //if this executed immediately then all broadcast is not working ....  can be done further......
-
         })
 
 
 
         socket.on("new-user-joined", (user) => {
-            // console.log(user, "broadcasting byevent at clientside ");
             alert(`${user} joined the room.`);
-        }); 
+        });
 
 
 
         socket.on("room-users", (allusers) => {
-            // console.log(allusers);
+          
             onlineusers.innerHTML = null;
 
             allusers.forEach((user) => {
@@ -71,22 +69,23 @@
                 onlineusers.append(li)
             })
 
-        }); 
+        });
 
 
         socket.on("user-left", (user) => {
             alert(`${user} lefted the room`);
-        }); 
+        });
 
 
-        
-        // sendBtn.addEventListener("click",()=>{
-        //     let message =message.value; 
-        //     socket.emit("send-message",message)
-        // })
+
+        sendBtn.addEventListener("click",()=>{
+            let message =message.value;
+            socket.emit("send-message",message)
+        })
 
 
     </script>
 
 </body>
+
 </html>
