@@ -34,6 +34,14 @@ app.get("/room", (req, res) => {
 io.on("connection", (socket) => {
     console.log("a user connected ", socket.id);
 
+    
+    
+    
+    //all the logic will go here ....
+    
+    
+
+
     socket.on("join-room", (data) => {
         // console.log(data, "from serverside"); 
 
@@ -58,10 +66,18 @@ io.on("connection", (socket) => {
 
     })
 
+
+
+    
+
+
+
+
+
+
 });
 
 
-// console.log(getUser);  //export import sucessfull
 
 
 
