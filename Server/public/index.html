@@ -12,24 +12,23 @@
 
     <h1>Chat App</h1>
 
-    <div>
-
+    <form action="./chat.html">
         <input id="name" type="text" placeholder="Enter your Name ">
-
         <input id="room" type="text" placeholder="Enter Room">
+        <button id="enter">Enter</button> 
+        <!-- action on enter   -->
+    </form>
 
-        <button id="enter">Enter</button>
-
-    </div>
+    
 
     <div id="onlineusers">
         <!-- the div tells info about who joined and left -->
     </div>
 
-    <div>
+    <!-- <div>
         <input type="text" id="message">
         <button id="send">Send</button>
-    </div>
+    </div> -->
 
 
 
@@ -50,8 +49,8 @@
         const onlineusers = document.querySelector("#onlineusers");
         // console.log(onlineusers); 
 
-        const message = document.querySelector("#message");
-        const sendBtn = document.querySelector('#send'); 
+        // const message = document.querySelector("#message");
+        // const sendBtn = document.querySelector('#send'); 
         // console.log(message);
 
 
@@ -94,10 +93,10 @@
 
 
         
-        sendBtn.addEventListener("click",()=>{
-            let message =message.value; 
-            socket.emit("send-message",message)
-        })
+        // sendBtn.addEventListener("click",()=>{
+        //     let message =message.value; 
+        //     socket.emit("send-message",message)
+        // })
 
 
 

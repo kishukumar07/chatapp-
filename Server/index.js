@@ -1,4 +1,5 @@
 import express from 'express';
+import path from "path";
 
 import { createServer } from 'http';
 import { Server } from 'socket.io'
@@ -13,10 +14,9 @@ const io = new Server(httpServer);
 
 
 
-
-
-
-
+app.get("/room", (req, res) => {
+    res.sendFile(path.join(__dirname,"public/chat.html"));
+})
 
 
 
@@ -39,18 +39,18 @@ io.on("connection", (socket) => {
         socket.broadcast.to(data.room).emit("new-user-joined", data.name);
         //also emitting the all users 
         socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
-  
 
 
 
 
-    socket.on("disconnect", () => {
-        deleteUser(socket.id);
-        socket.broadcast.to(data.room).emit("user-left",data.name); 
-        socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
-    }); 
 
-})
+        socket.on("disconnect", () => {
+            deleteUser(socket.id);
+            socket.broadcast.to(data.room).emit("user-left", data.name);
+            socket.broadcast.to(data.room).emit("room-users", allUser(data.room));
+        });
+
+    })
 
 });
 
