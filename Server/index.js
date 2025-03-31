@@ -25,7 +25,7 @@ const io = new Server(httpServer);
 
 
 app.get("/room", (req, res) => {
-    res.sendFile(path.join(__dirname,"public", "chat.html"));
+    res.sendFile(path.join(__dirname, "public", "chat.html"));
 })
 
 
@@ -33,13 +33,6 @@ app.get("/room", (req, res) => {
 //connection 
 io.on("connection", (socket) => {
     console.log("a user connected ", socket.id);
-
-    
-    
-    
-    //all the logic will go here ....
-    
-    
 
 
     socket.on("join-room", (data) => {
@@ -58,17 +51,44 @@ io.on("connection", (socket) => {
         socket.broadcast.to(data.room).emit("online-users", allUser(data.room));
 
 
+        //emit message to client  
+        socket.on("chat", (data) => {
+            io.to(data.room).emit("chat", {
+                name: data.name,
+                message: data.message,
+            });
+        });
+
+        // broadcast who is typing
+        socket.on("typing", (data) => {
+            socket.broadcast.to(data.room).emit("typing", { name: data.name });
+        });
+
+        // when user leaves the room remove user from users array and notify other in that room.
+        
+        
         socket.on("disconnect", () => {
             deleteUser(socket.id);
             // socket.broadcast.to(data.room).emit("user-left", data.name);
             socket.broadcast.to(data.room).emit("online-users", allUser(data.room));
+            console.log("Disconnected"); 
+            
         });
+   
+   
+   
+   
+    }) //at join-user
 
-    })
 
 
 
-    
+
+
+
+
+
+
 
 
 
