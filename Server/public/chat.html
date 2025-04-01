@@ -123,13 +123,17 @@
 
 
         socket.on("chat", (data) => {
-            console.log(data);
-            document.getElementById(
-                "messageContainer"
-            ).innerHTML += `<p><b>${data.name}:
- 📝-</b> ${data.message} </p>`;
-            feedback.innerHTML = "";
-        });
+    console.log(data);
+
+    // Append the new message to the message container
+    messageContainer.innerHTML += `<p><b>${data.name}: 📝-</b> ${data.message} </p>`;
+
+    // Auto-scroll to the bottom after adding the new message
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+
+    feedback.innerHTML = ""; // Clear feedback (typing indicator, etc.)
+});
+
 
         // Display online users
         socket.on("online-users", (data) => {

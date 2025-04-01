@@ -81,8 +81,9 @@ body {
 }
 
 .chat-message {
-    flex-grow: 1;
-    overflow-y: auto;
+height: 50px;
+    /* flex-grow: 1; */
+   
     padding: 15px;
     border-radius: 12px;
     margin-bottom: 12px;
@@ -144,16 +145,19 @@ body {
     padding-bottom: 60px;
 }
 
+#messageContainer {
+    overflow-y: auto;
+    height: 300px; /* Or use max-height: 50vh; for example */
+}
+
 #messageContainer p {
     padding: 10px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     margin-bottom: 8px;
     font-weight: 500;
-    transition: background 0.3s;
     align-self: flex-start;
 }
-
 #messageContainer p:hover {
     background: rgba(255, 255, 255, 0.3);
 }
