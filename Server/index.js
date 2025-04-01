@@ -48,6 +48,9 @@ io.on("connection", (socket) => {
         //Emit a event to tell others that new user joined. 
         socket.broadcast.to(data.room).emit("new-user-joined", data);
         //also emitting the all users 
+
+        // console.log(allUser(data.room)); 
+
         socket.broadcast.to(data.room).emit("online-users", allUser(data.room));
 
 

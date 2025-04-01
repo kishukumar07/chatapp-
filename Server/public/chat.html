@@ -116,7 +116,7 @@
 
         // Display if a user is typing
         socket.on("typing", (user) => {
-            feedback.innerHTML = `<p> ${user.username} is typing...
+            feedback.innerHTML = `<p> ${user.name} is typing...
  ✍
  </p>`;
         });
@@ -137,7 +137,7 @@
             data.forEach((user) => {
                 users.innerHTML += `<p>
  👤
- ${user} </p>`;
+ ${user.name} </p>`;
             });
         });
 
