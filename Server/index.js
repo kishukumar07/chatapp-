@@ -29,7 +29,6 @@ app.get("/room", (req, res) => {
 })
 
 
-
 //connection 
 io.on("connection", (socket) => {
     console.log("a user connected ", socket.id);
