@@ -20,7 +20,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 app.get("/", (req, res) => {
-  console.log(path.join(__dirname, "public", "chat.html"));
+  // console.log(path.join(__dirname, "public", "chat.html"));
   res.sendFile(path.join(__dirname, "public", "chat.html"));
 });
 

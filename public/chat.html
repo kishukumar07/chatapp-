@@ -44,7 +44,8 @@
 
 
 
-        const socket = io("http://localhost:4500", { transports: ["websocket"] });
+        // const socket = io("http://localhost:4500", { transports: ["websocket"] });
+        const socket = io("https://chatapp-cmc4.onrender.com/", { transports: ["websocket"] });
 
 
         const output = document.getElementById("output");
